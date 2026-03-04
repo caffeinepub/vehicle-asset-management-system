@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    /* Light mode - maroon, light gray, white, black palette */
+    --background: 0.98 0 0; /* white */
+    --foreground: 0.15 0 0; /* near black */
+    --card: 1 0 0; /* pure white */
+    --card-foreground: 0.15 0 0; /* near black */
+    --popover: 1 0 0; /* pure white */
+    --popover-foreground: 0.15 0 0; /* near black */
+    --primary: 0.35 0.12 15; /* maroon */
+    --primary-foreground: 0.98 0 0; /* white */
+    --secondary: 0.9 0.01 15; /* light gray with maroon tint */
+    --secondary-foreground: 0.15 0 0; /* near black */
+    --muted: 0.94 0.01 15; /* very light gray */
+    --muted-foreground: 0.5 0 0; /* medium gray */
+    --accent: 0.88 0.02 15; /* light gray accent */
+    --accent-foreground: 0.15 0 0; /* near black */
+    --destructive: 0.55 0.22 25; /* red for errors */
+    --destructive-foreground: 0.98 0 0; /* white */
+    --border: 0.88 0.01 15; /* light gray border */
+    --input: 0.88 0.01 15; /* light gray input */
+    --ring: 0.35 0.12 15; /* maroon ring */
+    --chart-1: 0.35 0.12 15; /* maroon */
+    --chart-2: 0.45 0.1 20; /* lighter maroon */
+    --chart-3: 0.55 0.08 25; /* even lighter maroon */
+    --chart-4: 0.25 0.14 10; /* darker maroon */
+    --chart-5: 0.65 0.06 30; /* pale maroon */
+
+    /* Category colors - distinct variations with good contrast */
+    --category-transports: 0.38 0.14 15; /* deep maroon - primary category */
+    --category-kill-trucks: 0.45 0.18 25; /* vibrant red-maroon */
+    --category-combo: 0.52 0.16 280; /* vibrant purple - distinct from others */
+    --category-acid-fracs: 0.3 0.12 5; /* dark burgundy */
+    --category-frac-pumps: 0.42 0.12 340; /* purple-maroon */
+    --category-treater: 0.48 0.15 45; /* burnt orange */
+    --category-float-trailer: 0.5 0.18 180; /* teal-cyan - distinct from others */
+    --category-misc: 0.45 0.08 0; /* neutral gray-brown */
+    --category-spare: 0.4 0.14 220; /* blue-gray */
+  }
+
+  .dark {
+    /* Dark mode - maroon, dark gray, white, black palette */
+    --background: 0.12 0 0; /* near black */
+    --foreground: 0.95 0 0; /* near white */
+    --card: 0.16 0 0; /* dark gray */
+    --card-foreground: 0.95 0 0; /* near white */
+    --popover: 0.18 0 0; /* dark gray */
+    --popover-foreground: 0.95 0 0; /* near white */
+    --primary: 0.5 0.14 15; /* lighter maroon for dark mode */
+    --primary-foreground: 0.98 0 0; /* white */
+    --secondary: 0.22 0.02 15; /* dark gray with maroon tint */
+    --secondary-foreground: 0.95 0 0; /* near white */
+    --muted: 0.22 0 0; /* dark gray */
+    --muted-foreground: 0.6 0 0; /* medium gray */
+    --accent: 0.28 0.05 15; /* dark gray accent with maroon */
+    --accent-foreground: 0.95 0 0; /* near white */
+    --destructive: 0.6 0.2 25; /* red for errors */
+    --destructive-foreground: 0.98 0 0; /* white */
+    --border: 0.25 0 0; /* dark border */
+    --input: 0.25 0 0; /* dark input */
+    --ring: 0.5 0.14 15; /* lighter maroon ring */
+    --chart-1: 0.5 0.14 15; /* lighter maroon */
+    --chart-2: 0.6 0.12 20; /* even lighter maroon */
+    --chart-3: 0.7 0.1 25; /* pale maroon */
+    --chart-4: 0.4 0.16 10; /* darker maroon */
+    --chart-5: 0.75 0.08 30; /* very pale maroon */
+
+    /* Category colors - adjusted for dark mode with maintained contrast */
+    --category-transports: 0.55 0.16 15; /* lighter maroon */
+    --category-kill-trucks: 0.6 0.2 25; /* lighter red-maroon */
+    --category-combo: 0.65 0.18 280; /* lighter vibrant purple */
+    --category-acid-fracs: 0.48 0.14 5; /* lighter burgundy */
+    --category-frac-pumps: 0.58 0.14 340; /* lighter purple-maroon */
+    --category-treater: 0.63 0.17 45; /* lighter burnt orange */
+    --category-float-trailer: 0.65 0.2 180; /* lighter teal-cyan */
+    --category-misc: 0.6 0.1 0; /* lighter gray-brown */
+    --category-spare: 0.56 0.16 220; /* lighter blue-gray */
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .category-transports {
+    background-color: oklch(var(--category-transports));
+  }
+  .category-kill-trucks {
+    background-color: oklch(var(--category-kill-trucks));
+  }
+  .category-combo {
+    background-color: oklch(var(--category-combo));
+  }
+  .category-acid-fracs {
+    background-color: oklch(var(--category-acid-fracs));
+  }
+  .category-frac-pumps {
+    background-color: oklch(var(--category-frac-pumps));
+  }
+  .category-treater {
+    background-color: oklch(var(--category-treater));
+  }
+  .category-float-trailer {
+    background-color: oklch(var(--category-float-trailer));
+  }
+  .category-misc {
+    background-color: oklch(var(--category-misc));
+  }
+  .category-spare {
+    background-color: oklch(var(--category-spare));
+  }
+
+  .border-category-transports {
+    border-color: oklch(var(--category-transports));
+  }
+  .border-category-kill-trucks {
+    border-color: oklch(var(--category-kill-trucks));
+  }
+  .border-category-combo {
+    border-color: oklch(var(--category-combo));
+  }
+  .border-category-acid-fracs {
+    border-color: oklch(var(--category-acid-fracs));
+  }
+  .border-category-frac-pumps {
+    border-color: oklch(var(--category-frac-pumps));
+  }
+  .border-category-treater {
+    border-color: oklch(var(--category-treater));
+  }
+  .border-category-float-trailer {
+    border-color: oklch(var(--category-float-trailer));
+  }
+  .border-category-misc {
+    border-color: oklch(var(--category-misc));
+  }
+  .border-category-spare {
+    border-color: oklch(var(--category-spare));
+  }
+
+  /* Enhanced Action Buttons with 3D elevation, gradients, and animations */
+  .enhanced-action-button {
+    @apply relative flex items-center justify-center gap-2 w-full px-6 py-3 rounded-xl font-semibold text-white;
+    @apply transition-all duration-300 ease-out;
+    @apply shadow-lg hover:shadow-xl;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(
+      135deg,
+      oklch(var(--primary)) 0%,
+      oklch(0.45 0.1 15) 100%
+    );
+    transform: translateY(0);
+    overflow: hidden;
+  }
+
+  .enhanced-action-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .enhanced-action-button:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  .enhanced-action-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .enhanced-action-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Small variant for inline use */
+  .enhanced-action-button-sm {
+    @apply relative flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-white text-xs;
+    @apply transition-all duration-300 ease-out;
+    @apply shadow-md hover:shadow-lg;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(
+      135deg,
+      oklch(var(--primary)) 0%,
+      oklch(0.45 0.1 15) 100%
+    );
+    transform: translateY(0);
+    overflow: hidden;
+  }
+
+  .enhanced-action-button-sm::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .enhanced-action-button-sm:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  .enhanced-action-button-sm:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .enhanced-action-button-sm:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Dark mode adjustments */
+  .dark .enhanced-action-button,
+  .dark .enhanced-action-button-sm {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--primary)) 0%,
+      oklch(0.55 0.12 15) 100%
+    );
+  }
+
+  .dark .enhanced-action-button:hover:not(:disabled),
+  .dark .enhanced-action-button-sm:hover:not(:disabled) {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Print styles for detailed report */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  @page {
+    size: letter;
+    margin: 0.75in;
+  }
+
+  /* Print-specific category colors */
+  .print-category-transports {
+    background-color: oklch(0.38 0.14 15) !important;
+    color: white !important;
+  }
+  .print-category-kill-trucks {
+    background-color: oklch(0.45 0.18 25) !important;
+    color: white !important;
+  }
+  .print-category-combo {
+    background-color: oklch(0.52 0.16 280) !important;
+    color: white !important;
+  }
+  .print-category-acid-fracs {
+    background-color: oklch(0.3 0.12 5) !important;
+    color: white !important;
+  }
+  .print-category-frac-pumps {
+    background-color: oklch(0.42 0.12 340) !important;
+    color: white !important;
+  }
+  .print-category-treater {
+    background-color: oklch(0.48 0.15 45) !important;
+    color: white !important;
+  }
+  .print-category-float-trailer {
+    background-color: oklch(0.5 0.18 180) !important;
+    color: white !important;
+  }
+  .print-category-misc {
+    background-color: oklch(0.45 0.08 0) !important;
+    color: white !important;
+  }
+  .print-category-spare {
+    background-color: oklch(0.4 0.14 220) !important;
+    color: white !important;
+  }
+}
