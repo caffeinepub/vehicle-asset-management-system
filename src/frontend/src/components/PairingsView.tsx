@@ -108,7 +108,6 @@ export default function PairingsView() {
 
   const handlePrint = () => {
     setShowPrintReport(true);
-    // Small delay to ensure the component renders before printing
     setTimeout(() => {
       window.print();
       setShowPrintReport(false);
@@ -119,12 +118,10 @@ export default function PairingsView() {
     setIsSharing(true);
 
     try {
-      // Generate shareable content
       const shareTitle = "Fleet Management Pairings Report";
       const shareText = `Fleet Management Report - ${pairings?.length || 0} active pairings\nGenerated on ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
       const shareUrl = window.location.href;
 
-      // Check if native share is supported
       if (navigator.share) {
         await navigator.share({
           title: shareTitle,
@@ -133,14 +130,12 @@ export default function PairingsView() {
         });
         toast.success("Report shared successfully");
       } else {
-        // Fallback: Copy to clipboard
         const textToCopy = `${shareTitle}\n\n${shareText}\n\nView online: ${shareUrl}`;
 
         if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(textToCopy);
           toast.success("Report link copied to clipboard");
         } else {
-          // Fallback for older browsers
           const textArea = document.createElement("textarea");
           textArea.value = textToCopy;
           textArea.style.position = "fixed";
@@ -157,7 +152,6 @@ export default function PairingsView() {
         }
       }
     } catch (error: any) {
-      // User cancelled share or error occurred
       if (error.name !== "AbortError") {
         console.error("Share error:", error);
         toast.error("Failed to share report. Please try again.");
@@ -175,7 +169,6 @@ export default function PairingsView() {
   const availableFirstAssets =
     availableTractors.length + availablePickups.length;
 
-  // Get standalone MISC pickups (unpaired pickups with MISC category)
   const standaloneMiscPickups =
     pickups?.filter(
       (p) =>
@@ -183,7 +176,6 @@ export default function PairingsView() {
         p.standaloneCategory === Category.misc,
     ) || [];
 
-  // Get standalone Spare Tractors (unpaired tractors with Spare Tractors category)
   const standaloneSpareTractors =
     tractors?.filter(
       (t) =>
@@ -191,7 +183,6 @@ export default function PairingsView() {
         t.standaloneCategory === Category.spareTractors,
     ) || [];
 
-  // Group pairings by category
   const pairingsByCategory = CATEGORY_ORDER.map((category) => {
     const categoryPairings =
       pairings?.filter((p) => p.category === category) || [];
@@ -303,6 +294,7 @@ export default function PairingsView() {
                   onClick={handlePrint}
                   className="enhanced-action-button-sm group"
                   aria-label="Print pairings report"
+                  data-ocid="pairings.print.button"
                 >
                   <Printer className="h-3.5 w-3.5 transition-transform group-hover:scale-110 group-hover:rotate-12" />
                   <span>Print Report</span>
@@ -313,6 +305,7 @@ export default function PairingsView() {
                   className="enhanced-action-button-sm group"
                   disabled={isSharing}
                   aria-label="Share Detailed Pairings Report"
+                  data-ocid="pairings.share.button"
                 >
                   <Share2 className="h-3.5 w-3.5 transition-transform group-hover:scale-110 group-hover:rotate-12" />
                   <span>{isSharing ? "Sharing..." : "Share Report"}</span>
@@ -321,6 +314,7 @@ export default function PairingsView() {
                   onClick={() => setDialogOpen(true)}
                   size="sm"
                   disabled={availableFirstAssets === 0}
+                  data-ocid="pairings.create.primary_button"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Create Pairing
@@ -330,7 +324,10 @@ export default function PairingsView() {
           </CardHeader>
           <CardContent>
             {pairings?.length === 0 && totalStandaloneAssets === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div
+                className="flex flex-col items-center justify-center py-12 text-center"
+                data-ocid="pairings.empty_state"
+              >
                 <div className="mb-4 rounded-full bg-muted p-4">
                   <Plus className="h-8 w-8 text-muted-foreground" />
                 </div>
@@ -342,6 +339,7 @@ export default function PairingsView() {
                   onClick={() => setDialogOpen(true)}
                   size="sm"
                   disabled={availableFirstAssets === 0}
+                  data-ocid="pairings.empty.primary_button"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Create Pairing
@@ -371,31 +369,31 @@ export default function PairingsView() {
                       >
                         <CollapsibleTrigger className="w-full">
                           <div
-                            className={`flex items-center justify-between p-4 ${color} hover:opacity-90 transition-opacity`}
+                            className={`flex items-center justify-between p-3 ${color} hover:opacity-90 transition-opacity`}
                           >
                             <div className="flex items-center gap-3">
-                              <h3 className="text-lg font-semibold text-white">
+                              <h3 className="text-base font-semibold text-white">
                                 {label}
                               </h3>
-                              <span className="px-2 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
+                              <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-xs font-medium">
                                 {totalCount}
                               </span>
                             </div>
                             {isOpen ? (
-                              <ChevronUp className="h-5 w-5 text-white" />
+                              <ChevronUp className="h-4 w-4 text-white" />
                             ) : (
-                              <ChevronDown className="h-5 w-5 text-white" />
+                              <ChevronDown className="h-4 w-4 text-white" />
                             )}
                           </div>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <div className="p-4 bg-card">
-                            <div className="space-y-4">
+                          <div className="p-2 bg-card">
+                            <div className="space-y-1.5">
                               {/* Paired Assets */}
                               {categoryPairings.map((pairing) => (
                                 <div
                                   key={pairing.tractorId}
-                                  className="border rounded-lg p-4 bg-background"
+                                  className="border rounded-md p-2 bg-background"
                                 >
                                   <PairingCard
                                     pairing={pairing}
@@ -413,7 +411,7 @@ export default function PairingsView() {
                                 const categoryText = getCategoryText(
                                   asset.standaloneCategory,
                                 );
-                                const assetIcon =
+                                const AssetIcon =
                                   asset.assetType === AssetType.pickup
                                     ? Car
                                     : Truck;
@@ -421,62 +419,53 @@ export default function PairingsView() {
                                   asset.assetType === AssetType.pickup
                                     ? "Pickup"
                                     : "Tractor";
-                                const AssetIcon = assetIcon;
 
                                 return (
                                   <div
                                     key={asset.assetNumber}
-                                    className="border rounded-lg p-4 bg-background"
+                                    className="border rounded-md p-2 bg-background"
                                   >
-                                    <div className="flex items-center gap-4">
-                                      <div className="flex-1 border rounded-lg p-4 bg-muted/30">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <AssetIcon className="h-5 w-5 text-primary" />
-                                          <span className="text-sm text-muted-foreground">
-                                            {assetTypeLabel}
-                                          </span>
-                                        </div>
-                                        <div className="text-lg font-semibold mb-2">
+                                    <div className="flex items-center gap-2">
+                                      <div className="flex-1 flex items-center gap-2 flex-wrap">
+                                        <AssetIcon className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                                        <span className="text-[10px] text-muted-foreground">
+                                          {assetTypeLabel}
+                                        </span>
+                                        <span className="text-sm font-bold">
                                           {asset.assetNumber}
-                                        </div>
-                                        <div className="flex flex-wrap gap-2 mb-2">
-                                          {labelText && (
+                                        </span>
+                                        {labelText && (
+                                          <Badge
+                                            variant="outline"
+                                            className="gap-0.5 text-[10px] bg-primary/10 text-primary border-primary/20 px-1 py-0 h-4"
+                                          >
+                                            <Tag className="h-1.5 w-1.5" />
+                                            {labelText}
+                                          </Badge>
+                                        )}
+                                        {categoryText && (
+                                          <Badge
+                                            variant="outline"
+                                            className="gap-0.5 text-[10px] bg-accent/10 text-accent-foreground border-accent/20 px-1 py-0 h-4"
+                                          >
+                                            <FolderOpen className="h-1.5 w-1.5" />
+                                            {categoryText}
+                                          </Badge>
+                                        )}
+                                        {asset.assetType === AssetType.pickup &&
+                                          asset.driverName && (
                                             <Badge
                                               variant="outline"
-                                              className="gap-1 bg-primary/10 text-primary border-primary/20"
+                                              className="gap-0.5 text-[10px] bg-primary/10 text-primary border-primary/20 px-1 py-0 h-4"
                                             >
-                                              <Tag className="h-3 w-3" />
-                                              {labelText}
+                                              <User className="h-1.5 w-1.5" />
+                                              {asset.driverName}
                                             </Badge>
                                           )}
-                                          {categoryText && (
-                                            <Badge
-                                              variant="outline"
-                                              className="gap-1 bg-accent/10 text-accent-foreground border-accent/20"
-                                            >
-                                              <FolderOpen className="h-3 w-3" />
-                                              {categoryText}
-                                            </Badge>
-                                          )}
-                                          {asset.assetType ===
-                                            AssetType.pickup &&
-                                            asset.driverName && (
-                                              <Badge
-                                                variant="outline"
-                                                className="gap-1 bg-primary/10 text-primary border-primary/20"
-                                              >
-                                                <User className="h-3 w-3" />
-                                                {asset.driverName}
-                                              </Badge>
-                                            )}
-                                        </div>
-                                        <div className="text-sm text-muted-foreground">
+                                        <span className="text-[10px] text-muted-foreground">
                                           AVI: {formatDate(asset.aviDate)}
-                                        </div>
+                                        </span>
                                       </div>
-                                    </div>
-                                    <div className="mt-2 text-xs text-muted-foreground italic">
-                                      Standalone categorized asset (not paired)
                                     </div>
                                   </div>
                                 );

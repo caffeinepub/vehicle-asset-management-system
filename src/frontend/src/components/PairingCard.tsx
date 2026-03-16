@@ -131,52 +131,55 @@ export default function PairingCard({
   const FirstAssetIcon = getFirstAssetIcon();
   const SecondAssetIcon = getSecondAssetIcon();
 
-  // Check if this is a Treater Trucks & Trailers pairing with a driver name
   const showPairingDriverName =
     pairing.category === Category.treatersTrucksAndTrailers &&
     pairing.driverName;
 
-  // Check if first asset (pickup) has a driver name
   const showPickupDriverName =
     firstAsset?.assetType === AssetType.pickup && firstAsset?.driverName;
 
   return (
     <>
-      <div className="flex flex-row items-center gap-2 w-full">
-        {/* First Asset Card (Tractor or Pickup) */}
+      {/* Main row: both asset cards + chain icon + actions */}
+      <div className="flex flex-row items-center gap-1.5 w-full">
+        {/* First Asset Card */}
         <Card
-          className={`flex-1 hover:shadow-md transition-shadow border-l-4 ${categoryColor ? `border-${categoryColor}` : ""}`}
+          className={`flex-1 hover:shadow-sm transition-shadow border-l-4 ${categoryColor ? `border-${categoryColor}` : ""}`}
         >
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-0 pt-1.5 px-2.5">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xs font-medium text-muted-foreground">
+              <CardTitle className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
                 {getFirstAssetTypeLabel()}
               </CardTitle>
-              <FirstAssetIcon className="h-3 w-3 text-muted-foreground" />
+              <FirstAssetIcon className="h-2.5 w-2.5 text-muted-foreground" />
             </div>
           </CardHeader>
-          <CardContent className="space-y-1 px-3 pb-2">
-            <div className="text-base font-bold">{pairing.tractorId}</div>
-            {firstAssetLabel && (
-              <Badge
-                variant="outline"
-                className="gap-1 text-xs bg-primary/10 text-primary border-primary/20 px-1 py-0"
-              >
-                <Tag className="h-2 w-2" />
-                {firstAssetLabel}
-              </Badge>
-            )}
-            {showPickupDriverName && (
-              <Badge
-                variant="outline"
-                className="gap-1 text-xs bg-primary/10 text-primary border-primary/20 px-1 py-0"
-              >
-                <User className="h-2 w-2" />
-                {firstAsset.driverName}
-              </Badge>
-            )}
+          <CardContent className="space-y-0.5 px-2.5 pb-1.5">
+            <div className="text-sm font-bold leading-tight">
+              {pairing.tractorId}
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {firstAssetLabel && (
+                <Badge
+                  variant="outline"
+                  className="gap-0.5 text-[10px] bg-primary/10 text-primary border-primary/20 px-1 py-0 h-4"
+                >
+                  <Tag className="h-1.5 w-1.5" />
+                  {firstAssetLabel}
+                </Badge>
+              )}
+              {showPickupDriverName && (
+                <Badge
+                  variant="outline"
+                  className="gap-0.5 text-[10px] bg-primary/10 text-primary border-primary/20 px-1 py-0 h-4"
+                >
+                  <User className="h-1.5 w-1.5" />
+                  {firstAsset.driverName}
+                </Badge>
+              )}
+            </div>
             {firstAsset && (
-              <div className="text-xs text-muted-foreground">
+              <div className="text-[10px] text-muted-foreground">
                 AVI: {formatDate(firstAsset.aviDate)}
               </div>
             )}
@@ -188,38 +191,42 @@ export default function PairingCard({
           <img
             src="/assets/generated/chain-link-icon-transparent.dim_32x32.png"
             alt="Paired"
-            className="w-6 h-6 opacity-70"
+            className="w-4 h-4 opacity-60"
           />
         </div>
 
-        {/* Second Asset Card (Trailer or Pump) */}
+        {/* Second Asset Card */}
         <Card
-          className={`flex-1 hover:shadow-md transition-shadow border-l-4 ${categoryColor ? `border-${categoryColor}` : ""}`}
+          className={`flex-1 hover:shadow-sm transition-shadow border-l-4 ${categoryColor ? `border-${categoryColor}` : ""}`}
         >
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-0 pt-1.5 px-2.5">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xs font-medium text-muted-foreground">
+              <CardTitle className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
                 {getSecondAssetTypeLabel()}
               </CardTitle>
-              <SecondAssetIcon className="h-3 w-3 text-muted-foreground" />
+              <SecondAssetIcon className="h-2.5 w-2.5 text-muted-foreground" />
             </div>
           </CardHeader>
-          <CardContent className="space-y-1 px-3 pb-2">
-            <div className="text-base font-bold">{pairing.secondAssetId}</div>
+          <CardContent className="space-y-0.5 px-2.5 pb-1.5">
+            <div className="text-sm font-bold leading-tight">
+              {pairing.secondAssetId}
+            </div>
             {secondAssetLabel && (
               <Badge
                 variant="outline"
-                className="gap-1 text-xs bg-primary/10 text-primary border-primary/20 px-1 py-0"
+                className="gap-0.5 text-[10px] bg-primary/10 text-primary border-primary/20 px-1 py-0 h-4"
               >
-                <Tag className="h-2 w-2" />
+                <Tag className="h-1.5 w-1.5" />
                 {secondAssetLabel}
               </Badge>
             )}
             {secondAsset && (
-              <div className="text-xs text-muted-foreground space-y-0.5">
-                <div>AVI: {formatDate(secondAsset.aviDate)}</div>
+              <div className="text-[10px] text-muted-foreground">
+                AVI: {formatDate(secondAsset.aviDate)}
                 {secondAsset.vilkDate && (
-                  <div>VILK: {formatDate(secondAsset.vilkDate)}</div>
+                  <span className="ml-1.5">
+                    VILK: {formatDate(secondAsset.vilkDate)}
+                  </span>
                 )}
               </div>
             )}
@@ -230,8 +237,8 @@ export default function PairingCard({
         <div className="flex-shrink-0">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-7 w-7">
-                <MoreVertical className="h-3.5 w-3.5" />
+              <Button variant="ghost" size="icon" className="h-6 w-6">
+                <MoreVertical className="h-3 w-3" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -251,25 +258,23 @@ export default function PairingCard({
         </div>
       </div>
 
-      {/* Pairing Details - Driver Name Prominently Displayed */}
-      <div className="mt-2 px-1 space-y-1">
+      {/* Compact details row below */}
+      <div className="flex flex-row flex-wrap gap-x-3 gap-y-0.5 items-center text-[10px] text-muted-foreground mt-1 px-0.5">
         {showPairingDriverName && (
-          <div className="flex items-center gap-2 p-1.5 bg-primary/5 rounded-md border border-primary/20">
-            <User className="h-3.5 w-3.5 text-primary flex-shrink-0" />
-            <span className="text-xs font-semibold text-primary">
-              Driver: {pairing.driverName}
-            </span>
-          </div>
+          <span className="flex items-center gap-1 text-primary font-medium">
+            <User className="h-2.5 w-2.5" />
+            Driver: {pairing.driverName}
+          </span>
         )}
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Calendar className="h-3 w-3" />
-          <span>Paired: {pairedDate.toLocaleDateString()}</span>
-        </div>
+        <span className="flex items-center gap-1">
+          <Calendar className="h-2.5 w-2.5" />
+          Paired: {pairedDate.toLocaleDateString()}
+        </span>
         {pairing.notes && (
-          <div className="flex items-start gap-2 text-xs">
-            <FileText className="h-3 w-3 mt-0.5 text-muted-foreground flex-shrink-0" />
-            <span className="text-muted-foreground">{pairing.notes}</span>
-          </div>
+          <span className="flex items-center gap-1">
+            <FileText className="h-2.5 w-2.5" />
+            {pairing.notes}
+          </span>
         )}
       </div>
 
@@ -285,8 +290,11 @@ export default function PairingCard({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel data-ocid="unpair.cancel_button">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
+              data-ocid="unpair.confirm_button"
               onClick={handleUnpair}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={unpairAssets.isPending}
